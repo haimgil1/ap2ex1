@@ -4,17 +4,28 @@ using MazeLib;
 using MazeGeneratorLib;
 namespace ObjectAdapter
 {
+	/// <summary>
+	/// Program.
+	/// </summary>
 	class Program
 	{
+		/// <summary>
+		/// The entry point of the program, where the program control starts and ends.
+		/// </summary>
+		/// <param name="args">The command-line arguments.</param>
 		static void Main(string[] args)
 		{
 			CompareSolvers();
 		}
+
+		/// <summary>
+		/// Compares the solvers.
+		/// </summary>
 		public static void CompareSolvers()
 		{
 			DFSMazeGenerator generator = new DFSMazeGenerator();
-			Maze maze = generator.Generate(50, 50);
-			Console.WriteLine(maze);
+			Maze maze = generator.Generate(10, 10);
+			//Console.WriteLine(maze);
 			ISearchable<Position> mazeAdapter = new MazeAdapter(maze);
 			ISearcher<Position> bfs = new BestFirstSearch<Position>();
 			ISearcher<Position> dfs = new Dfs<Position>();

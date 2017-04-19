@@ -6,9 +6,16 @@ using System.Text;
 
 namespace ObjectAdapter
 {
+	/// <summary>
+	/// Maze adapter.
+	/// </summary>
 	public class MazeAdapter : ISearchable<Position>
 	{
+		/// <summary>
+		/// The maze.
+		/// </summary>
 		private Maze maze;
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="T:ObjectAdapter.MazeAdapter"/> class.
 		/// </summary>
@@ -84,7 +91,7 @@ namespace ObjectAdapter
 		/// </summary>
 		/// <returns>The string.</returns>
 		/// <param name="solution">Solution.</param>
-		public string ToString(Solution<Position> solution)
+		public static string ToString(Solution<Position> solution)
 		{
 			StringBuilder sb = new StringBuilder();
 			Stack<State<Position>> printStack = new Stack<State<Position>>(solution.Stack);
@@ -109,7 +116,7 @@ namespace ObjectAdapter
 		/// <param name="state">State.</param>
 		/// <param name="stateCameFrom">State came from.</param>
 		/// <param name="direction">Direction.</param>
-		private void appendDirection(StringBuilder sb, int state, int stateCameFrom, int direction)
+		public  static void appendDirection(StringBuilder sb, int state, int stateCameFrom, int direction)
 		{
 			if (state > stateCameFrom)
 			{

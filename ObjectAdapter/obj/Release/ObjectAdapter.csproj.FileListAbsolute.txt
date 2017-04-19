@@ -1,0 +1,7 @@
+/Users/haimgil/Projects/ap2ex1/ObjectAdapter/bin/Release/ObjectAdapter.exe
+/Users/haimgil/Projects/ap2ex1/ObjectAdapter/bin/Release/SearchAlgorithmsLib.dll
+/Users/haimgil/Projects/ap2ex1/ObjectAdapter/bin/Release/Newtonsoft.Json.dll
+/Users/haimgil/Projects/ap2ex1/ObjectAdapter/bin/Release/Newtonsoft.Json.xml
+/Users/haimgil/Projects/ap2ex1/ObjectAdapter/obj/Release/ObjectAdapter.csprojResolveAssemblyReference.cache
+/Users/haimgil/Projects/ap2ex1/ObjectAdapter/obj/Release/ObjectAdapter.csproj.CoreCompileInputs.cache
+/Users/haimgil/Projects/ap2ex1/ObjectAdapter/obj/Release/ObjectAdapter.exe
