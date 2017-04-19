@@ -1,0 +1,8 @@
+/Users/haimgil/Projects/ap2ex1/ObjectAdapter/obj/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.cs
+/Users/haimgil/Projects/ap2ex1/ObjectAdapter/bin/Debug/ObjectAdapter.pdb
+/Users/haimgil/Projects/ap2ex1/ObjectAdapter/bin/Debug/ObjectAdapter.exe
+/Users/haimgil/Projects/ap2ex1/ObjectAdapter/obj/Debug/ObjectAdapter.exe
+/Users/haimgil/Projects/ap2ex1/ObjectAdapter/obj/Debug/ObjectAdapter.pdb
+/Users/haimgil/Projects/ap2ex1/ObjectAdapter/bin/Debug/SearchAlgorithmsLib.dll
+/Users/haimgil/Projects/ap2ex1/ObjectAdapter/bin/Debug/SearchAlgorithmsLib.pdb
+/Users/haimgil/Projects/ap2ex1/ObjectAdapter/bin/Debug/Newtonsoft.Json.dll

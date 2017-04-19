@@ -1,0 +1,7 @@
+/Users/haimgil/Projects/ap2ex1/SearchAlgorithmsLib/obj/Release/.NETPortable,Version=v4.5,Profile=Profile111.AssemblyAttribute.cs
+/Users/haimgil/Projects/ap2ex1/SearchAlgorithmsLib/bin/Release/Xamarin.Forms.Core.dll
+/Users/haimgil/Projects/ap2ex1/SearchAlgorithmsLib/bin/Release/Xamarin.Forms.Platform.dll
+/Users/haimgil/Projects/ap2ex1/SearchAlgorithmsLib/bin/Release/Xamarin.Forms.Xaml.dll
+/Users/haimgil/Projects/ap2ex1/SearchAlgorithmsLib/bin/Release/Newtonsoft.Json.dll
+/Users/haimgil/Projects/ap2ex1/SearchAlgorithmsLib/bin/Release/SearchAlgorithmsLib.dll
+/Users/haimgil/Projects/ap2ex1/SearchAlgorithmsLib/obj/Release/SearchAlgorithmsLib.dll
