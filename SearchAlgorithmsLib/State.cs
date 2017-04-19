@@ -11,8 +11,17 @@ namespace SearchAlgorithmsLib
 	/// </summary>
 	public class State<T> : IComparable
 	{
+		/// <summary>
+		/// The state.
+		/// </summary>
 		private T state; // the state represented by a string
+		/// <summary>
+		/// The cost.
+		/// </summary>
 		private float cost; // cost to reach this state (set by a setter)
+		/// <summary>
+		/// The came from.
+		/// </summary>
 		private State<T> cameFrom; // the state we came from to this state (setter)
 
 		/// <summary>

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace SearchAlgorithmsLib
 {
+	/// <summary>
+	/// Searcher.
+	/// </summary>
 	public interface ISearcher<T>
 	{
 		// the search method

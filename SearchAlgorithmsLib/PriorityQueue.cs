@@ -3,17 +3,27 @@ using System.Collections.Generic;
 
 namespace SearchAlgorithmsLib
 {
+	/// <summary>
+	/// Priority queue.
+	/// </summary>
 	public class PriorityQueue<T>
 	{
+		/// <summary>
+		/// The queue.
+		/// </summary>
 		private List<T> queue;
+		/// <summary>
+		/// The comparer.
+		/// </summary>
 		private Comparer<T> comparer;
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="T:SearchAlgorithmsLib.PriorityQueue`1"/> class.
 		/// </summary>
 		public PriorityQueue(Comparer<T> comparer)
 		{
 			this.queue = new List<T>();
-            this.comparer = comparer;
+		        this.comparer = comparer;
 		}
 
 		/// <summary>
@@ -35,6 +45,10 @@ namespace SearchAlgorithmsLib
 			return this.queue.Count;
 		} 
 
+		/// <summary>
+		/// Ises the empty.
+		/// </summary>
+		/// <returns><c>true</c>, if empty was ised, <c>false</c> otherwise.</returns>
 		public bool IsEmpty()
 		{
 			return this.queue.Count == 0;

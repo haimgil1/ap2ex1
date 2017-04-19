@@ -11,15 +11,23 @@ namespace SearchAlgorithmsLib
 	/// </summary>
 	public class BestFirstSearch<T> : QueueSearcher<T>
 	{
-
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:SearchAlgorithmsLib.BestFirstSearch`1"/> class.
+		/// </summary>
 		public BestFirstSearch(): base()
 		{
 
 		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:SearchAlgorithmsLib.BestFirstSearch`1"/> class.
+		/// </summary>
+		/// <param name="comparer">Comparer.</param>
 		public BestFirstSearch(Comparer<State<T>> comparer) : base(comparer)
 		{
 
 		}
+
 		/// <summary>
 		/// Search the specified searchable.
 		/// </summary>

@@ -15,7 +15,6 @@ namespace SearchAlgorithmsLib
 		State<T> GetInitialState();
 		State<T> GetIGoallState();
 		List<State<T>> GetAllPossibleStates(State<T> s);
-		string ToString(Solution<T> solution);
 		void updateCost(State<T> cameFrom,State<T> current);
 	}
 }

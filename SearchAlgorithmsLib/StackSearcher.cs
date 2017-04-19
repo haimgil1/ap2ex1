@@ -3,9 +3,16 @@ using System.Collections.Generic;
 
 namespace SearchAlgorithmsLib
 {
+	/// <summary>
+	/// Stack searcher.
+	/// </summary>
 	public abstract class StackSearcher<T> : Searcher<T>
 	{
+		/// <summary>
+		/// The open list.
+		/// </summary>
 		protected Stack<State<T>> openList;
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="T:SearchAlgorithmsLib.StackSearcher`1"/> class.
 		/// </summary>

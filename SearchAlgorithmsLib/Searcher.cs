@@ -3,15 +3,24 @@ using System.Collections.Generic;
 
 namespace SearchAlgorithmsLib
 {
+	/// <summary>
+	/// Searcher.
+	/// </summary>
 	public abstract class Searcher<T> : ISearcher<T>
 	{
-		
+		/// <summary>
+		/// The evaluated nodes.
+		/// </summary>
 		protected int evaluatedNodes;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:SearchAlgorithmsLib.Searcher`1"/> class.
+		/// </summary>
 		public Searcher()
 		{
 			this.evaluatedNodes = 0;
 		}
+
 		/// <summary>
 		/// Search the specified searchable.
 		/// </summary>

@@ -7,11 +7,20 @@ using MazeLib;
 
 namespace SearchAlgorithmsLib
 {
+	/// <summary>
+	/// Solution.
+	/// </summary>
 	public class Solution<T>
 	{
-
+		/// <summary>
+		/// The stack.
+		/// </summary>
 		private Stack<State<T>> stack;
+		/// <summary>
+		/// The evaluated nodes.
+		/// </summary>
 		private int evaluatedNodes;
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="T:SearchAlgorithmsLib.Solution`1"/> class.
 		/// </summary>

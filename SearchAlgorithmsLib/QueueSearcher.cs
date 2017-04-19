@@ -7,9 +7,18 @@ using System.Threading.Tasks;
 
 namespace SearchAlgorithmsLib
 {
+	/// <summary>
+	/// Queue searcher.
+	/// </summary>
 	public abstract class QueueSearcher<T> : Searcher<T>
 	{
+		/// <summary>
+		/// The open list.
+		/// </summary>
 		protected PriorityQueue<State<T>> openList;
+		/// <summary>
+		/// The comparer.
+		/// </summary>
 		protected Comparer<State<T>> comparer;
 
 		/// <summary>

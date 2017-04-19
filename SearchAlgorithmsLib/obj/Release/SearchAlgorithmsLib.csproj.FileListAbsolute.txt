@@ -1,0 +1,16 @@
+/Users/haimgil/Projects/ap2ex1/SearchAlgorithmsLib/bin/Release/SearchAlgorithmsLib.dll
+/Users/haimgil/Projects/ap2ex1/SearchAlgorithmsLib/bin/Release/Newtonsoft.Json.dll
+/Users/haimgil/Projects/ap2ex1/SearchAlgorithmsLib/bin/Release/Xamarin.Forms.Core.dll
+/Users/haimgil/Projects/ap2ex1/SearchAlgorithmsLib/bin/Release/Xamarin.Forms.Platform.dll
+/Users/haimgil/Projects/ap2ex1/SearchAlgorithmsLib/bin/Release/Xamarin.Forms.Xaml.dll
+/Users/haimgil/Projects/ap2ex1/SearchAlgorithmsLib/bin/Release/Xamarin.Forms.Core.pdb
+/Users/haimgil/Projects/ap2ex1/SearchAlgorithmsLib/bin/Release/Xamarin.Forms.Core.dll.mdb
+/Users/haimgil/Projects/ap2ex1/SearchAlgorithmsLib/bin/Release/Xamarin.Forms.Core.xml
+/Users/haimgil/Projects/ap2ex1/SearchAlgorithmsLib/bin/Release/Xamarin.Forms.Platform.pdb
+/Users/haimgil/Projects/ap2ex1/SearchAlgorithmsLib/bin/Release/Xamarin.Forms.Xaml.pdb
+/Users/haimgil/Projects/ap2ex1/SearchAlgorithmsLib/bin/Release/Xamarin.Forms.Xaml.dll.mdb
+/Users/haimgil/Projects/ap2ex1/SearchAlgorithmsLib/bin/Release/Xamarin.Forms.Xaml.xml
+/Users/haimgil/Projects/ap2ex1/SearchAlgorithmsLib/bin/Release/Newtonsoft.Json.xml
+/Users/haimgil/Projects/ap2ex1/SearchAlgorithmsLib/obj/Release/SearchAlgorithmsLib.csprojResolveAssemblyReference.cache
+/Users/haimgil/Projects/ap2ex1/SearchAlgorithmsLib/obj/Release/SearchAlgorithmsLib.csproj.CoreCompileInputs.cache
+/Users/haimgil/Projects/ap2ex1/SearchAlgorithmsLib/obj/Release/SearchAlgorithmsLib.dll
