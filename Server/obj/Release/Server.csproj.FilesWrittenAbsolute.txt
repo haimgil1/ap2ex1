@@ -1,0 +1,7 @@
+/Users/haimgil/Projects/ap2ex1/Server/obj/Release/.NETFramework,Version=v4.5.AssemblyAttribute.cs
+/Users/haimgil/Projects/ap2ex1/Server/bin/Release/Newtonsoft.Json.dll
+/Users/haimgil/Projects/ap2ex1/Server/bin/Release/SearchAlgorithmsLib.dll
+/Users/haimgil/Projects/ap2ex1/Server/bin/Release/ObjectAdapter.exe
+/Users/haimgil/Projects/ap2ex1/Server/bin/Release/Server.exe.config
+/Users/haimgil/Projects/ap2ex1/Server/bin/Release/Server.exe
+/Users/haimgil/Projects/ap2ex1/Server/obj/Release/Server.exe

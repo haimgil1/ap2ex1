@@ -7,19 +7,26 @@ using System.Configuration;
 
 namespace Server
 {
-    public class Program
-    {
-        static void Main(string[] args)
-        {
-            
-            string port = ConfigurationManager.AppSettings["Port"].ToString();
-            int portInt = Int32.Parse(port);
+	/// <summary>
+	/// Program.
+	/// </summary>
+	public class Program
+	{
+		/// <summary>
+		/// The entry point of the program, where the program control starts and ends.
+		/// </summary>
+		/// <param name="args">The command-line arguments.</param>
+		static void Main(string[] args)
+		{
 
-            IClientHandler ch = new ClientHandler();
-            ServerConnect server = new ServerConnect(portInt, ch);
-            //start the server
-            server.Start();
-            Console.ReadKey();
-        }
-    }
+			string port = ConfigurationManager.AppSettings["Port"].ToString();
+			int portInt = Int32.Parse(port);
+
+			IClientHandler ch = new ClientHandler();
+			ServerConnect server = new ServerConnect(portInt, ch);
+			//start the server
+			server.Start();
+			Console.ReadKey();
+		}
+	}
 }
