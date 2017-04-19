@@ -44,9 +44,9 @@ namespace SearchAlgorithmsLib
 				{
 					if (!closed.Contains(s) && !openList.Contains(s))
 					{
-						AddToOpenList(s);
-						s.Cost = n.Cost + 1;
 						s.CameFrom = n;
+						searchable.updateCost(s, n);
+						AddToOpenList(s);
 					}
 					else
 					{

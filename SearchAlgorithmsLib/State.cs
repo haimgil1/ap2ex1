@@ -22,7 +22,7 @@ namespace SearchAlgorithmsLib
 		private State(T state)
 		{
 			this.state = state;
-			this.cost = 0;
+			this.cost =(float) System.Double.MaxValue;;
 			this.cameFrom = null;
 		}
 

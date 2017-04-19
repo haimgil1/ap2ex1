@@ -13,7 +13,7 @@ namespace ObjectAdapter
 		public static void CompareSolvers()
 		{
 			DFSMazeGenerator generator = new DFSMazeGenerator();
-			Maze maze = generator.Generate(15, 15);
+			Maze maze = generator.Generate(50, 50);
 			Console.WriteLine(maze);
 			ISearchable<Position> mazeAdapter = new MazeAdapter(maze);
 			ISearcher<Position> bfs = new BestFirstSearch<Position>();

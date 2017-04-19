@@ -24,7 +24,9 @@ namespace ObjectAdapter
 		/// <returns>The initial state.</returns>
 		public State<Position> GetInitialState()
 		{
-			return State<Position>.StatePool.GetState(this.maze.InitialPos);
+			State<Position> state = State<Position>.StatePool.GetState(this.maze.InitialPos);
+			state.Cost = 0;
+			return state;
 		}
 
 		/// <summary>
@@ -34,6 +36,11 @@ namespace ObjectAdapter
 		public State<Position> GetIGoallState()
 		{
 			return State<Position>.StatePool.GetState(this.maze.GoalPos);
+		}
+
+		public void updateCost(State<Position> cameFrom, State<Position> current)
+		{
+			cameFrom.Cost = current.Cost + 1;
 		}
 
 		/// <summary>
@@ -50,33 +57,6 @@ namespace ObjectAdapter
 			addNeighbor(j + 1, i,j + 1, maze.Cols, s, possibleStates);
 			addNeighbor(0, i-1, j, i, s, possibleStates);
 			addNeighbor(0, i, j - 1, j, s, possibleStates);
-
-			//addNeighborDown(i,i - 1, j, s, possibleStates);
-			//addNeighborDown(j,i,j - 1, s, possibleStates);
-			//State<Position> state;
-			//if ((i + 1 < maze.Rows) && (maze[i + 1, j] == CellType.Free))
-			//{
-			//	state = State<Position>.StatePool.GetState(new Position(i + 1, j));
-			//	possibleStates.Add(state);
-			//}
-
-			//if ((j + 1 < maze.Cols) && (maze[i, j+1] == CellType.Free))
-			//{
-			//	state = State<Position>.StatePool.GetState(new Position(i , j+1));
-			//	possibleStates.Add(state);
-			//}
-
-			//if ((i>0) && (maze[i - 1, j] == CellType.Free))
-			//{
-			//	state = State<Position>.StatePool.GetState(new Position(i - 1, j));
-			//	possibleStates.Add(state);
-			//}
-
-			//if ((j>0) && (maze[i, j-1] == CellType.Free))
-			//{
-			//	state = State<Position>.StatePool.GetState(new Position(i, j - 1));
-			//	possibleStates.Add(state);
-			//}
 			return possibleStates;
 		}
 

@@ -74,10 +74,7 @@ namespace SearchAlgorithmsLib
 		/// <param name="y">The y coordinate.</param>
 		public override int Compare(State<T> x, State<T> y)
 		{
-			if (x.Cost > y.Cost) return 1;
-			else if (x.Cost < y.Cost) return -1;
-			else return 0; // Equal.
-			//return x.Cost.CompareTo(y.Cost);
+			return x.Cost.CompareTo(y.Cost);
 		}
 	}
 }
