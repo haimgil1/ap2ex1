@@ -2,11 +2,15 @@
 
 namespace Server
 {
-	/// <summary>
-	/// Client handler.
-	/// </summary>
-	public interface IClientHandler
-	{
-		void HandleClient(TcpClient client);
-	}
+    /// <summary>
+    /// Interface : IClientHandler. The Interface has "HandleClient" function.
+    /// </summary>
+    public interface IClientHandler
+    {
+        /// <summary>
+        /// Handles the client.
+        /// </summary>
+        /// <param name="client">The client.</param>
+        void HandleClient(TcpClient client);
+    }
 }

@@ -11,251 +11,256 @@ using System.Threading;
 
 namespace Server
 {
-	/// <summary>
-	/// Model.
-	/// </summary>
-	public class Model : IModel
-	{
-		private ModelDataBase modelData;
+    /// <summary>
+    /// Class: Model. The Model implement IModel.
+    /// </summary>
+    /// <seealso cref="Server.IModel" />
+    public class Model : IModel
+    {
+        private ModelDataBase modelData;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Model"/> class.
+        /// </summary>
+        public Model()
+        {
+            modelData = new ModelDataBase();
+        }
+        /// <summary>
+        /// Generates the maze.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="rows">The rows.</param>
+        /// <param name="cols">The cols.</param>
+        /// <returns>Maze</returns>
+        public Maze GenerateMaze(string name, int rows, int cols)
+        {
+            modelData.mutexMazes.WaitOne();
+            IMazeGenerator newMaze = new DFSMazeGenerator();
+            Maze maze = null;
+            // Generate the maze.
+            maze = newMaze.Generate(rows, cols);
+            modelData.Mazes.Add(name, maze);
+            // Unlock.
+            modelData.mutexMazes.ReleaseMutex();
+            return maze;
+        }
+        /// <summary>
+        /// Solves the maze BFS.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <returns>Solution</returns>
+        public Solution<Position> solveMazeBFS(string name)
+        {
+            Solution<Position> solution = null;
+            // Check if the maze exist.
+            if (modelData.Mazes.ContainsKey(name))
+            {
+                ISearchable<Position> mazeObjectAdapter = new MazeAdapter(modelData.Mazes[name]);
+                ISearcher<Position> BFS = new Bfs<Position>();
+                // Check if the solution exist.
+                if (modelData.BfsSolutions.ContainsKey(name))
+                {
+                    solution = modelData.BfsSolutions[name];
+                }
+                else
+                {
+                    // Calculate the solution.
+                    solution = BFS.Search(mazeObjectAdapter);
+                    modelData.BfsSolutions.Add(name, solution);
+                }
+            }
+            return solution;
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Model"/> class.
-		/// </summary>
-		public Model()
-		{
-			modelData = new ModelDataBase();
-		}
+        }
+        /// <summary>
+        /// Solves the maze DFS.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <returns>Solution</returns>
+        public Solution<Position> solveMazeDFS(string name)
+        {
+            Solution<Position> solution = null;
+            // Check if the maze exist.
+            if (modelData.Mazes.ContainsKey(name))
+            {
+                ISearchable<Position> mazeObjectAdapter = new MazeAdapter(modelData.Mazes[name]);
+                ISearcher<Position> DFS = new Dfs<Position>();
+                // Check if the solution exist.
+                if (modelData.DfsSolutions.ContainsKey(name))
+                {
+                    solution = modelData.DfsSolutions[name];
+                }
+                else
+                {
+                    // Calculate the solution.
+                    solution = DFS.Search(mazeObjectAdapter);
+                    modelData.DfsSolutions.Add(name, solution);
+                }
+            }
+            return solution;
+        }
+        /// <summary>
+        /// Generates the game.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="rows">The rows.</param>
+        /// <param name="cols">The cols.</param>
+        /// <param name="client1">The client1.</param>
+        /// <returns>GameMultiPlayer</returns>
+        public GameMultiPlayer GenerateGame(string name, int rows, int cols, TcpClient client1)
+        {
+            IMazeGenerator newMaze = new DFSMazeGenerator();
+            Maze maze;
+            GameMultiPlayer game = null;
+            // Check if the game is on the list of wating or playing games.
+            if (!modelData.GameWating.ContainsKey(name) &&
+                !modelData.GamesPlaying.ContainsKey(name))
+            {
+                // Generate maze.
+                maze = newMaze.Generate(rows, cols);
+                maze.Name = name;
+                // Generate the game.
+                game = new GameMultiPlayer(maze, client1);
+                modelData.GameWating.Add(name, game);
+            }
+            return game;
 
-		/// <summary>
-		/// Getmodels the data.
-		/// </summary>
-		/// <returns>The data.</returns>
-		public ModelDataBase GetmodelData()
-		{
-			return modelData;
-		}
+        }
+        /// <summary>
+        /// Adds the game playing.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="game">The game.</param>
+        public void AddGamePlaying(string name, GameMultiPlayer game)
+        {
+            modelData.GamesPlaying.Add(name, game);
+        }
 
-		/// <summary>
-		/// Generates the maze.
-		/// </summary>
-		/// <param name="name">The name.</param>
-		/// <param name="rows">The rows.</param>
-		/// <param name="cols">The cols.</param>
-		/// <returns></returns>
-		public Maze GenerateMaze(string name, int rows, int cols)
-		{
-			modelData.mutexMazes.WaitOne();
-			IMazeGenerator newMaze = new DFSMazeGenerator();
-			Maze maze = null;
-			if (!modelData.Mazes.ContainsKey(name))
-			{
-				maze = newMaze.Generate(rows, cols);
-				modelData.Mazes.Add(name, maze);
-			}
-			else
-			{
-				maze = modelData.Mazes[name];
-			}
-			modelData.mutexMazes.ReleaseMutex();
-			return maze;
-		}
+        /// <summary>
+        /// Removes the game wating.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        public void RemoveGameWating(string name)
+        {
+            modelData.GameWating.Remove(name);
+        }
+        /// <summary>
+        /// Removes the game playing.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        public void RemoveGamePlaying(string name)
+        {
+            modelData.GamesPlaying.Remove(name);
+        }
+        /// <summary>
+        /// Check if contains the maze.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <returns>bool</returns>
+        public bool ContainMaze(string name)
+        {
+            return modelData.Mazes.ContainsKey(name);
+        }
+        /// <summary>
+        /// Lists the games wating.
+        /// </summary>
+        /// <returns>string</returns>
+        public string ListGamesWating()
+        {
+            return JsonConvert.SerializeObject(modelData.GameWating.Keys);
+        }
+        /// <summary>
+        /// Finds the game wating.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <returns>GameMultiPlayer</returns>
+        public GameMultiPlayer FindGameWating(string name)
+        {
+            if (modelData.GameWating.ContainsKey(name))
+            {
+                return modelData.GameWating[name];
+            }
+            return null;
+        }
+        /// <summary>
+        /// Finds the game playing.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <returns>GameMultiPlayer</returns>
+        public GameMultiPlayer FindGamePlaying(string name)
+        {
+            if (modelData.GamesPlaying.ContainsKey(name))
+            {
+                return modelData.GamesPlaying[name];
+            }
+            return null;
+        }
+        /// <summary>
+        /// Finds the game by client.
+        /// </summary>
+        /// <param name="client">The client.</param>
+        /// <returns>GameMultiPlayer</returns>
+        public GameMultiPlayer FindGameByClient(TcpClient client)
+        {
+            GameMultiPlayer game = null;
+            // Over on GameWating dictionary.
+            foreach (GameMultiPlayer value in modelData.GameWating.Values)
+            {
+                // Check if the client exist.
+                if (value.GetClient1() == client || value.GetClient2() == client)
+                {
+                    game = value;
+                }
+            }
+            // Over on GamesPlaying dictionary.
+            foreach (GameMultiPlayer value in modelData.GamesPlaying.Values)
+            {
+                // Check if the client exist.
+                if (value.GetClient1() == client || value.GetClient2() == client)
+                {
+                    game = value;
+                }
+            }
+            return game;
+        }
+        /// <summary>
+        /// Clients the on game.
+        /// </summary>
+        /// <param name="client">The client.</param>
+        /// <returns>bool</returns>
+        public bool ClientOnGame(TcpClient client)
+        {
+            if (this.FindGameByClient(client) != null)
+            {
+                return true;
+            }
+            return false;
+        }
+        /// <summary>
+        /// Find if the client exist in game.
+        /// </summary>
+        /// <param name="client">The client.</param>
+        /// <param name="name">The name.</param>
+        /// <returns></returns>
+        public bool ClientOnGameByName(TcpClient client, string name)
+        {
+            if (modelData.GameWating.ContainsKey(name))
+            {
+                if(modelData.GameWating[name].GetClient1() == client ||
+                    modelData.GameWating[name].GetClient2() == client)
+                {
+                    return true;
+                }
+            } 
+            else if (modelData.GamesPlaying.ContainsKey(name)) {
+                if (modelData.GamesPlaying[name].GetClient1() == client ||
+                    modelData.GamesPlaying[name].GetClient2() == client)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
-		/// <summary>
-		/// Solves the maze BFS.
-		/// </summary>
-		/// <param name="name">The name.</param>
-		/// <returns></returns>
-		public Solution<Position> solveMazeBFS(string name)
-		{
-			modelData.mutexBfs.WaitOne();
-			Solution<Position> solution = null;
-			if (modelData.Mazes.ContainsKey(name))
-			{
-				ISearchable<Position> mazeObjectAdapter = new MazeAdapter(modelData.Mazes[name]);
-				ISearcher<Position> BFS = new Bfs<Position>();
-
-				if (modelData.BfsSolutions.ContainsKey(name))
-				{
-					solution = modelData.BfsSolutions[name];
-				}
-				else
-				{
-					solution = BFS.Search(mazeObjectAdapter);
-					modelData.BfsSolutions.Add(name, solution);
-				}
-			}
-			modelData.mutexBfs.ReleaseMutex();
-			return solution;
-
-		}
-
-		/// <summary>
-		/// Solves the maze DFS.
-		/// </summary>
-		/// <param name="name">The name.</param>
-		/// <returns></returns>
-		public Solution<Position> solveMazeDFS(string name)
-		{
-			modelData.mutexDfs.WaitOne();
-			Solution<Position> solution = null;
-			if (modelData.Mazes.ContainsKey(name))
-			{
-				ISearchable<Position> mazeObjectAdapter = new MazeAdapter(modelData.Mazes[name]);
-				ISearcher<Position> DFS = new Dfs<Position>();
-
-				if (modelData.DfsSolutions.ContainsKey(name))
-				{
-					solution = modelData.DfsSolutions[name];
-				}
-				else
-				{
-					solution = DFS.Search(mazeObjectAdapter);
-					modelData.DfsSolutions.Add(name, solution);
-				}
-			}
-			modelData.mutexBfs.ReleaseMutex();
-			return solution;
-		}
-
-		/// <summary>
-		/// Generates the game.
-		/// </summary>
-		/// <returns>The game.</returns>
-		/// <param name="name">Name.</param>
-		/// <param name="rows">Rows.</param>
-		/// <param name="cols">Cols.</param>
-		/// <param name="client1">Client1.</param>
-		public GameMultiPlayer GenerateGame(string name, int rows, int cols, TcpClient client1)
-		{
-			IMazeGenerator newMaze = new DFSMazeGenerator();
-			Maze maze;
-			GameMultiPlayer game = null;
-			if (!modelData.GameWating.ContainsKey(name) &&
-				!modelData.GamesPlaying.ContainsKey(name))
-			{
-				maze = newMaze.Generate(rows, cols);
-				maze.Name = name;
-				game = new GameMultiPlayer(maze, client1);
-				modelData.GameWating.Add(name, game);
-			}
-			return game;
-
-		}
-
-		/// <summary>
-		/// Adds the game playing.
-		/// </summary>
-		/// <param name="name">The name.</param>
-		/// <param name="game">The game.</param>
-		public void AddGamePlaying(string name, GameMultiPlayer game)
-		{
-			modelData.GamesPlaying.Add(name, game);
-		}
-
-		/// <summary>
-		/// Removes the game wating.
-		/// </summary>
-		/// <param name="name">Name.</param>
-		public void RemoveGameWating(string name)
-		{
-			modelData.GameWating.Remove(name);
-		}
-
-		/// <summary>
-		/// Removes the game playing.
-		/// </summary>
-		/// <param name="name">Name.</param>
-		public void RemoveGamePlaying(string name)
-		{
-			modelData.GamesPlaying.Remove(name);
-		}
-
-		/// <summary>
-		/// Contains the maze.
-		/// </summary>
-		/// <returns><c>true</c>, if maze was contained, <c>false</c> otherwise.</returns>
-		/// <param name="name">Name.</param>
-		public bool ContainMaze(string name)
-		{
-			return modelData.Mazes.ContainsKey(name);
-		}
-
-		/// <summary>
-		/// Lists the games wating.
-		/// </summary>
-		/// <returns>The games wating.</returns>
-		public string ListGamesWating()
-		{
-			return JsonConvert.SerializeObject(modelData.GameWating.Keys);
-		}
-
-		/// <summary>
-		/// Finds the game wating.
-		/// </summary>
-		/// <returns>The game wating.</returns>
-		/// <param name="name">Name.</param>
-		public GameMultiPlayer FindGameWating(string name)
-		{
-			if (modelData.GameWating.ContainsKey(name))
-			{
-				return modelData.GameWating[name];
-			}
-			return null;
-		}
-
-		/// <summary>
-		/// Finds the game playing.
-		/// </summary>
-		/// <returns>The game playing.</returns>
-		/// <param name="name">Name.</param>
-		public GameMultiPlayer FindGamePlaying(string name)
-		{
-			if (modelData.GamesPlaying.ContainsKey(name))
-			{
-				return modelData.GamesPlaying[name];
-			}
-			return null;
-		}
-
-		/// <summary>
-		/// Finds the game by client.
-		/// </summary>
-		/// <returns>The game by client.</returns>
-		/// <param name="client">Client.</param>
-		public GameMultiPlayer FindGameByClient(TcpClient client)
-		{
-			GameMultiPlayer game = null;
-			foreach (GameMultiPlayer value in modelData.GameWating.Values)
-			{
-				if (value.GetClient1() == client || value.GetClient2() == client)
-				{
-					game = value;
-				}
-			}
-			foreach (GameMultiPlayer value in modelData.GamesPlaying.Values)
-			{
-				if (value.GetClient1() == client || value.GetClient2() == client)
-				{
-					game = value;
-				}
-			}
-			return game;
-		}
-
-		/// <summary>
-		/// Clients the on game.
-		/// </summary>
-		/// <returns><c>true</c>, if on game was cliented, <c>false</c> otherwise.</returns>
-		/// <param name="client">Client.</param>
-		public bool ClientOnGame(TcpClient client)
-		{
-			GameMultiPlayer game = this.FindGameByClient(client);
-			if (game == null)
-			{
-				return false;
-			}
-			return true;
-		}
-
-	}
+    }
 }

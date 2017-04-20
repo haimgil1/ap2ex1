@@ -9,9 +9,18 @@ using System.Threading.Tasks;
 
 namespace Server
 {
+    /// <summary>
+    /// Class : StartMazeCommand. The class responsible to start a new game.
+    /// If the game exist the client gets a message.
+    /// </summary>
+    /// <seealso cref="Server.ICommand" />
     class StartMazeCommand : ICommand
     {
         private IModel model;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StartMazeCommand"/> class.
+        /// </summary>
+        /// <param name="model">The model.</param>
         public StartMazeCommand(IModel model)
         {
             this.model = model;
@@ -20,24 +29,26 @@ namespace Server
         {
             if (!this.CheckValid(args, client))
             {
-                return "singlePlayer";
+                return "multiPlayer";
             }
             string name = args[0];
             int rows = int.Parse(args[1]);
             int cols = int.Parse(args[2]);
-            // get the game from the model.
+            // Get the game from the model.
             GameMultiPlayer game = model.GenerateGame(name, rows, cols, client);
-
-            if (game != null)
-            {
-                return "multiPlayer";
-            } else
+            if (game == null)
             {
                 Controller.NestedErrors nested = new Controller.NestedErrors("Error exist game", client);
-                return "singlePlayer";
             }
+            return "multiPlayer";
         }
 
+        /// <summary>
+        /// Checks the valid.
+        /// </summary>
+        /// <param name="args">The arguments.</param>
+        /// <param name="client">The client.</param>
+        /// <returns></returns>
         public bool CheckValid(string[] args, TcpClient client)
         {
             if (args.Length > 3)

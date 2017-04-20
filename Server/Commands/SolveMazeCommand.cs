@@ -10,9 +10,17 @@ using System.Threading.Tasks;
 
 namespace Server
 {
-     public class SolveMazeCommand : ICommand
+    /// <summary>
+    /// Class : SolveMazeCommand. The class responsible to sovle the maze by DFS or BFS.
+    /// </summary>
+    /// <seealso cref="Server.ICommand" />
+    public class SolveMazeCommand : ICommand
     {
         private IModel model;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SolveMazeCommand"/> class.
+        /// </summary>
+        /// <param name="model">The model.</param>
         public SolveMazeCommand(IModel model)
         {
             this.model = model;
@@ -21,32 +29,37 @@ namespace Server
         {
             if (!this.CheckValid(args, client))
             {
+                // Check if the client is on other game to keep the connection.
+                if (model.ClientOnGame(client))
+                {
+                    return "multiPlayer";
+                }
                 return "singlePlayer";
             }
             string name = args[0];
             string typeAlgorithem = args[1];
-            string result;
             AdapterSolution adpterSolution = null;
             Solution<Position> s = null;
 
+            // Solve the maze by BFS - 0, DFS - 1.
             switch (typeAlgorithem)
             {
                 case "0":
-                    s = model.solveMazeBFS(name);
+                    s = model.solveMazeBFS(name); // BFS solution.
                     break;
                 case "1":
-                    s = model.solveMazeDFS(name);
+                    s = model.solveMazeDFS(name); // DFS solution.
                     break;
             }
+            // If the solution is not null send the solution to the client. Else send a message.
             if (s != null)
             {
                 adpterSolution = new AdapterSolution(s, name, s.SolutionSize());
-                result = adpterSolution.ToJson();
+                Controller.SendToClient(adpterSolution.ToJson(), client);
             } else
             {
-                result = "error exist maze";
+                Controller.NestedErrors nested = new Controller.NestedErrors("maze exist", client);
             }
-            Controller.SendToClient(result, client);
             if (model.ClientOnGame(client))
             {
                 return "multiPlayer";
@@ -54,6 +67,12 @@ namespace Server
             return "singlePlayer";
         }
 
+        /// <summary>
+        /// Checks the valid.
+        /// </summary>
+        /// <param name="args">The arguments.</param>
+        /// <param name="client">The client.</param>
+        /// <returns></returns>
         public bool CheckValid(string[] args, TcpClient client)
         {
             if (args.Length > 2)
